@@ -15,6 +15,12 @@ public:
     * @brief  启动日志收集，正式版取消
     */
     static void initLogHandler();
+    /**
+    * @brief         开启日志远程传输
+    * @date          2020-07-23
+    */
+    static void initRemoteTransmission();
+
 
 private:
     static LONG  MSJUnhandledExceptionFilter(PEXCEPTION_POINTERS pExceptionInfo );

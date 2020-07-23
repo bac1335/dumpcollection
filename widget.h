@@ -11,8 +11,12 @@ public:
     Widget(QWidget *parent = 0);
     ~Widget();
 
+protected:
+     void mouseReleaseEvent(QMouseEvent *event);
+
 private:
     void init();
+    int  m_iTest = 0;
 };
 
 #endif // WIDGET_H

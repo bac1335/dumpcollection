@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 
     LLSExceptionHandler::initLogHandler();
 
+    LLSExceptionHandler::initRemoteTransmission();
+
     Widget w;
     w.show();
 

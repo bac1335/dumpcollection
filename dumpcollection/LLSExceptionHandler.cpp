@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QDir>
 #include "tllogger.h"
+#include "llsrsmanager.h"
 
 #pragma execution_character_set("utf-8")
 
@@ -29,7 +30,12 @@ void LLSExceptionHandler::initExceptionHandler()
 
 void LLSExceptionHandler::initLogHandler()
 {
-   TLLogger::installLog(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+ "/log/");//初始化日志收集
+    TLLogger::installLog(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+ "/log/");//初始化日志收集
+}
+
+void LLSExceptionHandler::initRemoteTransmission()
+{
+    LLSRSManager::initRemoteTransmission();
 }
 
 LONG LLSExceptionHandler::MSJUnhandledExceptionFilter(PEXCEPTION_POINTERS pException)
