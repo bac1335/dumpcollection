@@ -1,6 +1,6 @@
 ﻿// msjexhnd.h
-#ifndef __MSJEXHND_H__  
-#define __MSJEXHND_H__  
+#ifndef LLSEXCEPTIONHANDLER_H
+#define LLSEXCEPTIONHANDLER_H
 #include <Windows.h>
 #include <QString>
 
@@ -24,4 +24,4 @@ private:
 };  
 
 
-#endif  
+#endif  //LLSEXCEPTIONHANDLER_H
