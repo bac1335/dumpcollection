@@ -21,7 +21,7 @@ void Widget::mouseReleaseEvent(QMouseEvent *event)
 
     QByteArray array = QString::number(++m_iTest).toUtf8();
 
-    LLS_DEBUG(array);
+    LLS_DEBUG("===============================================================================================================================" + array);
 
 }
 

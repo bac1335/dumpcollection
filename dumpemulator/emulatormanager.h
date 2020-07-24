@@ -11,6 +11,7 @@ public:
     explicit EmulatorManager(QObject* parent = nullptr);
     Q_INVOKABLE void startConnect(QString ip,quint16 port);
     Q_INVOKABLE void disConnect();
+    Q_INVOKABLE void saveFile(QByteArray bytearray,QString path);
 
 private:
     void init();

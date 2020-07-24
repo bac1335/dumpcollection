@@ -2,61 +2,124 @@
 import QtQuick.Window 2.12
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import Qt.labs.platform 1.1
 
 Window {
     id: root
     visible: true
     width: 960
     height: 640
+//    flags: Qt.Widget
     title: qsTr("数据LOG模拟器")
-    color: "#242424"
+    Image {
+        id: bg
+        anchors.fill: parent
+        opacity: 0.8
+        Component.onCompleted: {
+            bg.source = "qrc:/skin/bg.png"
+        }
+    }
     property int  btnTypeConnect: 0
-    property int  btnTypeDisconnect: 0
-    signal sigBtnClicked(int type)
+    property int  btnTypeDisconnect: 1
+    property int  btnTypeClear: 2
+    property int  btnTypeSave: 3
 
-
-    ScrollView{
-        id: textBody
-        width:  root.width
-        height: root.height
-
-        TextArea{
-            id: textArea
-            width: root.width
-            height: root.height * 3/4
-            wrapMode : TextEdit.WrapAnywhere
-            font.pixelSize:20
-            style: TextAreaStyle{
-                textColor: "white"
-                selectionColor: "steelblue"
-                selectedTextColor: "#eee"
-                backgroundColor: root.color
-            }
+    TextArea{
+        id: textArea
+        property string savePath: ""
+        width: root.width
+        height: root.height * 4/5
+        anchors.top: parent.top
+        anchors.topMargin: 5
+//        wrapMode : TextEdit.WordWrap
+        backgroundVisible: false
+        tabChangesFocus: true
+        readOnly: true
+        font.pixelSize:22
+        font.family: "微软雅黑"
+        style: TextAreaStyle{
+            textColor: "black"
+            selectionColor: "steelblue"
+            selectedTextColor: "#eee"
+            frame: Item{}
+//            transientScrollBars: true
         }
 
-        Rectangle{
-
-            anchors.fill: parent
-        }
     }
 
     Item{
-        width: 260
-        height: 60
+        width: 700
+        height: 50
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 50
+        anchors.bottomMargin: 30
         Row{
-            spacing: 100
+            spacing: 10
+            TextField{
+                id: ipInput
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                height: 20
+                placeholderText: "127.0.0.1"
+                anchors.bottom: parent.bottom
+            }
+
+            TextField{
+                id: portInput
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: 20
+                placeholderText: "10241"
+                anchors.bottom: parent.bottom
+            }
+
             Loader{
+                id: btnConnent
                 sourceComponent: btnCom
+                Component.onCompleted: {
+                    btnConnent.item.setBtnType("连接",btnTypeConnect);
+                }
             }
             Loader{
+                id: btnDisconnent
                 sourceComponent: btnCom
+                Component.onCompleted: {
+                    btnDisconnent.item.setBtnType("断开",btnTypeDisconnect);
+                }
+            }
+            Loader{
+                id: btnClear
+                sourceComponent: btnCom
+                Component.onCompleted: {
+                    btnClear.item.setBtnType("清空",btnTypeClear);
+                }
+            }
+            Loader{
+                id: btnSave
+                sourceComponent: btnCom
+                Component.onCompleted: {
+                    btnSave.item.setBtnType("保存",btnTypeSave);
+                }
             }
         }
     }
 
+    FileDialog {
+        id: fileSave
+//        currentFile: document.source
+//        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+        fileMode: FileDialog.SaveFile
+        title: "Please choose a file"
+        nameFilters: [ "Text Files (*.txt)"]
+        onAccepted: {
+            console.log("You chose: " + fileSave.currentFile)
+            fileSave.visible = false
+            saveFlie(fileSave.currentFile)
+
+        }
+
+
+    }
 
     Component{
         id: btnCom
@@ -64,10 +127,10 @@ Window {
             id: btn
             property int  btnType: -1
             width: 80
-            height: 60
+            height: 45
             text: "test"
             onClicked: {
-                sigBtnClickedd(btnType)
+                doBtnClicked(btnType)
             }
 
             function setBtnType(text,type){
@@ -78,10 +141,8 @@ Window {
         }
     }
 
-
     function textAreaAdd(text){
-        var str = text + "\n"
-        textArea.insert(0,str)
+        textArea.append(text)
     }
 
     Connections{
@@ -90,6 +151,48 @@ Window {
             textAreaAdd(array)
         }
 
+    }
+
+    function doBtnClicked(btnType){
+        console.log("============================" + btnType)
+        switch(btnType){
+        case btnTypeConnect:
+            var text1,text2
+            if(ipInput.text == "") {
+                text1 = "127.0.0.1"
+            }
+            else{
+                text1 = ipInput.text
+            }
+
+            if(portInput.text == "") {
+                text2 = "10241"
+            }
+            else{
+                text2 = portInput.text
+            }
+            EmulatorManager.startConnect(text1,text2)
+            break;
+        case btnTypeDisconnect:
+            EmulatorManager.disConnect()
+            break;
+        case btnTypeClear:
+            textArea.text = ""
+        break;
+        case btnTypeSave:
+//            textArea.text = ""
+            fileSave.visible = true
+        break;
+        }
+    }
+
+    function saveFlie(path){
+        if(textArea.text != ""){
+            EmulatorManager.saveFile(textArea.text,path)
+        }
+        else{
+
+        }
     }
 
 }

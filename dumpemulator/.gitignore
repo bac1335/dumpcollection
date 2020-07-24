@@ -1,0 +1,5 @@
+debug
+release
+.qmake*
+dumpemulator.pro.*
+Makefile*
