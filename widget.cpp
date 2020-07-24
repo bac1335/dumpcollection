@@ -1,7 +1,6 @@
 ﻿#include "widget.h"
 #include <QDebug>
-#include "llsrsmanager.h"
-#include <QTcpServer>
+#include "dunmconfig.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -15,13 +14,15 @@ Widget::~Widget()
 
 }
 
+
 void Widget::mouseReleaseEvent(QMouseEvent *event)
 {
     qDebug() << "--->lls<---" << __FUNCTION__ << "=================";
 
     QByteArray array = QString::number(++m_iTest).toUtf8();
 
-    LLSRS->write(array);
+    LLS_DEBUG(array);
+
 }
 
 void Widget::init()

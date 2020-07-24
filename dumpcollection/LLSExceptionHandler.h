@@ -16,8 +16,7 @@ public:
     */
     static void initLogHandler();
     /**
-    * @brief         开启日志远程传输
-    * @date          2020-07-23
+    * @brief  开启日志远程传输
     */
     static void initRemoteTransmission();
 
