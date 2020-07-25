@@ -9,7 +9,7 @@ Window {
     visible: true
     width: 960
     height: 640
-//    flags: Qt.Widget
+    property bool isConnectChanged: false
     title: qsTr("数据LOG模拟器")
     Image {
         id: bg
@@ -55,11 +55,22 @@ Window {
         anchors.bottomMargin: 30
         Row{
             spacing: 10
+            //TextFiled用Loader加载会出现异常，显示不了
             TextField{
                 id: ipInput
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 height: 20
+                style: TextFieldStyle{
+                    background: Rectangle{
+                        color: control.hovered?"#87CEEB":"#87CEFA";
+                        radius: 10
+                    }
+                    padding.bottom: 10
+                    padding.left: 10
+                    padding.top: 10
+                    padding.right: 10
+                }
                 placeholderText: "127.0.0.1"
                 anchors.bottom: parent.bottom
             }
@@ -67,6 +78,16 @@ Window {
             TextField{
                 id: portInput
                 anchors.verticalCenter: parent.verticalCenter
+                style: TextFieldStyle{
+                    background: Rectangle{
+                        color: control.hovered?"#87CEEB":"#87CEFA";
+                        radius: 10
+                    }
+                    padding.bottom: 10
+                    padding.left: 10
+                    padding.top: 10
+                    padding.right: 10
+                }
                 width: 100
                 height: 20
                 placeholderText: "10241"
@@ -85,6 +106,7 @@ Window {
                 sourceComponent: btnCom
                 Component.onCompleted: {
                     btnDisconnent.item.setBtnType("断开",btnTypeDisconnect);
+                    btnDisconnent.item.setBtnEable(false)
                 }
             }
             Loader{
@@ -106,8 +128,6 @@ Window {
 
     FileDialog {
         id: fileSave
-//        currentFile: document.source
-//        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
         fileMode: FileDialog.SaveFile
         title: "Please choose a file"
         nameFilters: [ "Text Files (*.txt)"]
@@ -129,6 +149,16 @@ Window {
             width: 80
             height: 45
             text: "test"
+            style:ButtonStyle{
+                  background: Rectangle{
+                      color: control.hovered?"#87CEEB":"#87CEFA";
+                      radius: 10
+                  }
+                  padding.bottom: 10
+                  padding.left: 10
+                  padding.top: 10
+                  padding.right: 10
+            }
             onClicked: {
                 doBtnClicked(btnType)
             }
@@ -138,7 +168,12 @@ Window {
                 btn.text = text
             }
 
+            function setBtnEable(state){
+                btn.enabled = state
+            }
+
         }
+
     }
 
     function textAreaAdd(text){
@@ -153,10 +188,18 @@ Window {
 
     }
 
+    Connections{
+        target: EmulatorManager
+        onSigSendConnetState :{
+            setConnectState(state);
+        }
+    }
+
     function doBtnClicked(btnType){
         console.log("============================" + btnType)
         switch(btnType){
         case btnTypeConnect:
+            isConnectChanged = true
             var text1,text2
             if(ipInput.text == "") {
                 text1 = "127.0.0.1"
@@ -193,6 +236,11 @@ Window {
         else{
 
         }
+    }
+
+    function setConnectState(state){
+        btnConnent.item.setBtnEable(!state)
+        btnDisconnent.item.setBtnEable(state)
     }
 
 }

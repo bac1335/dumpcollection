@@ -23,11 +23,8 @@ LLSRSManager *LLSRSManager::instance()
 
 void LLSRSManager::write(QByteArray array)
 {
-
-
-
     for(auto item : m_listClient){
-        item->write(array);
+        item->write("$start$" + array +"$end$");
     }
 }
 
@@ -69,7 +66,8 @@ void LLSRSManager::onUpdate_DeviceNetState()
 {
     int count = m_listClient.count();
 #ifdef QT_DEBUG
-    qDebug()<<"Line-658 当前在线设备数量:"<<count;
+//    qDebug()<<"Line-658 当前在线设备数量:"<<count;
+    LLS_DEBUG(QString("%1%2").arg("Line-658 当前在线设备数量:").arg(QString::number(count)).toUtf8());
 #endif
     for(int i = 0;i<count;i++)
     {
