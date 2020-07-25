@@ -23,6 +23,9 @@ LLSRSManager *LLSRSManager::instance()
 
 void LLSRSManager::write(QByteArray array)
 {
+
+
+
     for(auto item : m_listClient){
         item->write(array);
     }
