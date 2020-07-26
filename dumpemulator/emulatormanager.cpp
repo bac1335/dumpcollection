@@ -17,10 +17,9 @@ EmulatorManager::EmulatorManager(QObject *parent):
 {
     init();
 }
-#include <QThread>
+
 void EmulatorManager::startConnect(QString ip,quint16 port)
 {
-
     qDebug() << "--->lls<---" << __FUNCTION__ << ip << ":" << port;
 
     if(!m_pTcpSocket){
