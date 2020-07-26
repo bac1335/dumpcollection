@@ -47,7 +47,6 @@ void LLSRSManager::init()
 bool LLSRSManager::send_WakeHand(QTcpSocket *currSocket)
 {
     int ret = currSocket->write("$start$$end$");
-    qDebug()<<"ret ="<<ret;
     if(ret == -1)
         return STATE_OFFLINE;
     return STATE_ONLINE;
