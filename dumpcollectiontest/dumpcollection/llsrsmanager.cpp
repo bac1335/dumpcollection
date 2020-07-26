@@ -33,7 +33,7 @@ void LLSRSManager::init()
     if(!m_pTcpServer){
         m_pTcpServer = new QTcpServer(this);
         connect(m_pTcpServer,&QTcpServer::newConnection,this,&LLSRSManager::onNewConnection);
-        m_pTcpServer->listen(QHostAddress::LocalHost,quint16(10241));
+        m_pTcpServer->listen(QHostAddress::Any,quint16(10241));
 
         //断线检测
         m_pTimer = new QTimer(this);
