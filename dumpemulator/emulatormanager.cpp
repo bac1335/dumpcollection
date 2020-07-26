@@ -17,11 +17,12 @@ EmulatorManager::EmulatorManager(QObject *parent):
 {
     init();
 }
-
+#include <QThread>
 void EmulatorManager::startConnect(QString ip,quint16 port)
 {
 
     qDebug() << "--->lls<---" << __FUNCTION__ << ip << ":" << port;
+
     if(!m_pTcpSocket){
         m_pTcpSocket = new QTcpSocket(this);
         connect(m_pTcpSocket,&QTcpSocket::readyRead,this,&EmulatorManager::onReadText);
@@ -142,14 +143,4 @@ void EmulatorManager::onReadText()
     QByteArray array = socker->readAll();
 
     ParsingData(array);
-
-//    if(array == "$start$$end$"){
-//        if(!m_connectState){
-//            m_connectState = true;
-//            emit sigSendConnetState(true);
-//        }
-//    }
-//    else{
-//        emit sigSendQmlWorld(array);
-//    }
 }
