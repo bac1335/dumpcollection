@@ -11,9 +11,7 @@ void LLSRSManager::initRemoteTransmission()
     if(!m_pLLSSRManager){
         m_pLLSSRManager = new LLSRSManager;
         m_pLLSSRManager->init();
-
     }
-
 }
 
 LLSRSManager *LLSRSManager::instance()
@@ -25,7 +23,11 @@ void LLSRSManager::write(QString array)
 {
     if(m_pLLSSRManager){
         for(auto item : m_listClient){
-            item->write("$start$" + array.toUtf8() +"$end$");
+            QString data = QString("%1%2%3")
+                           .arg("$start$")
+                           .arg(array)
+                           .arg("$end$");
+            item->write(data.toUtf8().data());
         }
     }
     else{
@@ -69,10 +71,6 @@ void LLSRSManager::clearSocket(QTcpSocket *socket)
 void LLSRSManager::onUpdate_DeviceNetState()
 {
     int count = m_listClient.count();
-#ifdef QT_DEBUG
-//    qDebug()<<"Line-658 当前在线设备数量:"<<count;
-    LLS_DEBUG(QString("%1%2").arg("Line-658 当前在线设备数量:").arg(QString::number(count)).toUtf8());
-#endif
     for(int i = 0;i<count;i++)
     {
         QTcpSocket* client = m_listClient.at(i);

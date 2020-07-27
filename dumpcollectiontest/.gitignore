@@ -1,6 +1,0 @@
-debug
-release
-.qmake*
-dumpcollection.pro.*
-Makefile*
-vc140*

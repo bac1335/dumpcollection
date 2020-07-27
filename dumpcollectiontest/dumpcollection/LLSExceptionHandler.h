@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <QString>
 
-class LLSExceptionHandler
+class Q_DECL_EXPORT LLSExceptionHandler
 {  
 public:
     /**

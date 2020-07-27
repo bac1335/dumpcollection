@@ -12,7 +12,7 @@ class QTcpSocket;
 class QTimer;
 #define LLSRS LLSRSManager::instance()
 
-class LLSRSManager : public QObject{
+class Q_DECL_EXPORT LLSRSManager : public QObject{
     enum{
         STATE_OFFLINE,
         STATE_ONLINE

@@ -9,7 +9,7 @@
  * @brief   :debug输出到日志文件
  * @other   :测试使用这个功能，正式版请屏蔽(不调用installLog即可)
 ****************************************************************************/
-class  TLLogger
+class  Q_DECL_EXPORT TLLogger
 {
 public:
     TLLogger();
