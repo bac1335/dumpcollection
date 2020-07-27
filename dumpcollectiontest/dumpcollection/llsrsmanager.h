@@ -1,4 +1,4 @@
-#ifndef LLSRSMANAGER_H
+﻿#ifndef LLSRSMANAGER_H
 #define LLSRSMANAGER_H
 
 #include <QObject>
@@ -20,7 +20,7 @@ class LLSRSManager : public QObject{
 public:
     static void initRemoteTransmission();
     static LLSRSManager* instance();
-    void write(QByteArray array);
+    void write(QString array);
 
 private:
     explicit LLSRSManager(QObject* parent = nullptr):QObject(parent){}

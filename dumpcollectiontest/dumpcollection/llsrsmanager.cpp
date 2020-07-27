@@ -1,4 +1,4 @@
-#include "llsrsmanager.h"
+﻿#include "llsrsmanager.h"
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QTimer>
@@ -21,10 +21,15 @@ LLSRSManager *LLSRSManager::instance()
     return m_pLLSSRManager;
 }
 
-void LLSRSManager::write(QByteArray array)
+void LLSRSManager::write(QString array)
 {
-    for(auto item : m_listClient){
-        item->write("$start$" + array +"$end$");
+    if(m_pLLSSRManager){
+        for(auto item : m_listClient){
+            item->write("$start$" + array.toUtf8() +"$end$");
+        }
+    }
+    else{
+        qDebug() << array;
     }
 }
 

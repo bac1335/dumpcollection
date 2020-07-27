@@ -137,8 +137,6 @@ Window {
             saveFlie(fileSave.currentFile)
 
         }
-
-
     }
 
     Component{
@@ -196,7 +194,7 @@ Window {
     }
 
     function doBtnClicked(btnType){
-        console.log("============================" + btnType)
+        console.log("--->lls<---Btn_clicked" + btnType)
         switch(btnType){
         case btnTypeConnect:
             isConnectChanged = true
